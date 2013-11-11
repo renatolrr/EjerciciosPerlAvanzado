@@ -10,13 +10,9 @@ sub new {
   my $dni = shift || croak "Todos tenemos Dni";
   my $nombre = shift || croak "Sin nombre?";
   my $email = shift || croak "Importante\n";
-  my $curso = shift || croak "Matricúlate\n";
-  my $mensualidad = shift || croak "Para cobrar\n"; 
   my $self =  {  DNI =>  $dni,
 		 NOMBRE => $nombre,
-		 EMAIL=> $email,
-		 CURSO => $curso,
-		 MENSUALIDAD => $mensualidad
+		 EMAIL=> $email,		 
 	      };
   bless $self; 
   return $self;
@@ -25,8 +21,7 @@ sub new {
 sub to_string{
     my $self = shift;
     return 'Dni:'.$self->{'DNI'}."\n".'Nombre:'.$self->{'NOMBRE'}."\n".
-    'Email:'.$self->{'EMAIL'}."\n".'Curso:'.$self->{'CURSO'}."\n".
-    'Mensualidad:'.$self->{'MENSUALIDAD'}."\n";
+    'Email:'.$self->{'EMAIL'}."\n";
 }
 
 "Todos somos personas";
