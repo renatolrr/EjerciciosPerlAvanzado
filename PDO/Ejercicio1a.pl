@@ -8,26 +8,35 @@ use v5.10;
 use lib qw(lib);
 
 use PA::Alumno;
+use Term::Menu;
 
 my $alumno;
 
-use Term::Menu;
-  my $menu = new Term::Menu;
-  my $answer = $menu->menu(
-        uno    => ["Entrada alumno", '1'],
-        dos    => ["Dato del alumno", '2'],
+sub menu{
+	 my $menu = new Term::Menu;
+     my $answer = $menu->menu(
+        entr =>["Entrada alumno", '1'],
+        lis  => ["Dato del alumno", '2'],
+        sal => ["Para salir",3],
         
-  );
-   if(defined($answer)) {
-        if($answer='uno') {
+    );
+    if(defined($answer)&&($answer ne 'sal')) {
+        if($answer eq'entr') {
 			alta();
+			menu();
 		} else {
-			print "listado";
 			listado();
+			menu();
 		} 
   } else {
-        print "Answer was undefined\n";
+        print "Te vas, bye\n";
   }
+	
+}
+
+
+
+ 
   
  sub alta{ 
 	print "Dni del Alumno\n";
@@ -41,7 +50,7 @@ use Term::Menu;
 	print "Couta mensual\n";
 	my $mes=<STDIN>;
 
-	my $alumno = new PA::Alumno ( $dni, $nombre, 
+	$alumno = new PA::Alumno ( $dni, $nombre, 
 				$email,$curso,$mes);
 	print "\n";
 	return $alumno;
@@ -51,5 +60,7 @@ sub listado{
 	print $alumno->to_string, "\n";
 	
 }
+
+menu();
 			
 
