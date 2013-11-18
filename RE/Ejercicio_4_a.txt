@@ -1,0 +1,5 @@
+1
+ $ Modificador que indica que debe coincidir al final de la cadena.
+ i Busca coincidencias de patrones sin distinguir mayúsculas de minúsculas.
+ Tenemos una C al final de la cadena y nos devuelve 1. 
+ Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
