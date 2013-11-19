@@ -1,0 +1,3 @@
+Cada código HTML comprende el símbolo «#» y 6 letras o números. 
+#FF0000 - Con este código HTML le decimos al navegador que muestre la máxima cantidad de rojo y nada de verde ni de azul. El resultado es evidentemente el color rojo puro.
+salu2s.

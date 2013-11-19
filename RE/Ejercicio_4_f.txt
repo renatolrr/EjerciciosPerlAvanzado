@@ -1,0 +1,50 @@
+Código:
+
+#!/usr/bin/perl 
+# Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
+
+use YAPE::Regex::Explain;
+print YAPE::Regex::Explain->new('\w[a-f]* ')->explain();
+
+Con comentarios:
+
+renato@debian:~/EjerciciosPerlAvanzado/RE$ perl Ejercicio_4_f.pl 
+The regular expression:
+
+(?-imsx:\w[a-f]* )
+
+matches as follows:
+  
+NODE                     EXPLANATION
+----------------------------------------------------------------------
+(?-imsx:                 group, but do not capture (case-sensitive)
+                         (with ^ and $ matching normally) (with . not
+                         matching \n) (matching whitespace and #
+                         normally):
+----------------------------------------------------------------------
+  \w                       word characters (a-z, A-Z, 0-9, _)
+----------------------------------------------------------------------
+  [a-f]*                   any character of: 'a' to 'f' (0 or more
+                           times (matching the most amount possible))
+----------------------------------------------------------------------
+                           ' '
+----------------------------------------------------------------------
+)                        end of grouping
+----------------------------------------------------------------------
+
+Sin comentarios:
+
+renato@debian:~/EjerciciosPerlAvanzado/RE$ perl Ejercicio_4_f.pl 
+(?x-ims:
+
+  \w
+
+  [a-f]*
+
+  \
+
+)
+
+
+
+
