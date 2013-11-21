@@ -1,0 +1,15 @@
+Dni: 1
+Nombre: pepe
+Email: pepe@gmail.com
+Curso: 31
+Mensualidad: 2000
+Dni: 2
+Nombre: juan 
+Email: juan@ugr.es
+Curso: lengua
+Mensualidad: 400
+Dni: 22
+Nombre: pepe
+Email: pepepep
+Curso: pepep
+Mensualidad: 12
