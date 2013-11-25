@@ -12,9 +12,9 @@ my $bd_file_name = shift || 'academia.sqlite';
 
 my $sql = SQL::Abstract->new;
 
-print "Dni del Alumno\n";
+print "Dni del Profesor\n";
 my $dni=<STDIN>;
-print "Nombre Alumno\n";
+print "Nombre del Profesor\n";
 my $nombre=<STDIN>;
 print "Email\n";
 my $email=<STDIN>;
