@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
 
 use strict;
 use warnings;
@@ -24,7 +25,7 @@ print "Mensualidad del alumno\n";
 my $mes=<STDIN>;
 
 my %fieldvals = (
-	mensualidad => $mes,
+	variableB => $mes,
 );
 	
 
@@ -37,3 +38,24 @@ $sth->execute( @bind );
 
 
 my $rc = $dbh->disconnect();
+
+#historico
+my $sql2 = SQL::Abstract->new; 
+my %histo = (
+		tabla       => 'alumno',
+        proc        => 'mod',	
+        dni         => $dni,
+        nombre      => '',
+        email       => '',
+        variableA   => '',
+        variableB   => $mes
+);
+
+$dbh = DBI->connect( "dbi:SQLite:dbname=historico.sqlite" ) 
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+($stmt, @bind) = $sql2-> insert ('hist',\%histo);
+
+$sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
+$rc = $dbh->disconnect();

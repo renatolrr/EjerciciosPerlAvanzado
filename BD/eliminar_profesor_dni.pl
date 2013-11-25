@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
 
 use strict;
 use warnings;
@@ -23,13 +24,49 @@ my %where= (
 
 my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
     || die "No puedo conectarme con $bd_file_name: $!\n";
-my($stmt, @bind) = $sql-> delete('profesor',\%where);
+    
+#consulta
+my($stmt, @bind) = $sql-> select ('profesor','*',\%where);
 
 my $sth = $dbh->prepare($stmt);
 $sth->execute( @bind );
 
+my $ary = $sth->fetchall_arrayref;
+#say "Tenemos a: ";
+my @captura;
+
+for (@$ary){
+	#print @$_;
+	push(@captura,@$_);  
+	#print "\n";
+}
+#borrar
+($stmt, @bind) = $sql-> delete('profesor',\%where);
+
+$sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
 
 my $rc = $dbh->disconnect();
+#historico
+my $sql2 = SQL::Abstract->new; 
+my %histo = (
+		tabla       => 'profesor',
+        proc        => 'off',	
+        dni         => $captura[0],
+        nombre      => $captura[1],
+        email       => $captura[2],
+        variableA   => $captura[3],
+        variableB   => $captura[4]
+);
 
+$dbh = DBI->connect( "dbi:SQLite:dbname=historico.sqlite" ) 
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+($stmt, @bind) = $sql2-> insert ('hist',\%histo);
+
+$sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
+$rc = $dbh->disconnect();
 
 

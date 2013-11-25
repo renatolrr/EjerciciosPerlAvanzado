@@ -1,4 +1,5 @@
-#!/usr/bin/perl
+#!/usr/bin/perl 
+# Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
 
 use strict;
 use warnings;
@@ -31,7 +32,14 @@ $sth->execute( @bind );
 
 my $ary = $sth->fetchall_arrayref;
 say "Tenemos a: ";
-map((say join("\t",@$_)),@$ary);
+for (@$ary){
+	print @$_;
+	print "\n";
+}
+
+
+
+
 
 
 
