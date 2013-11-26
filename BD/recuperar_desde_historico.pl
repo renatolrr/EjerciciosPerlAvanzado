@@ -1,21 +1,20 @@
 #!/usr/bin/perl
 # Ficheros en https://github.com/renatolrr/EjerciciosPerlAvanzado 
 
-
-
 use v5.10;
 use DBI;
 use SQL::Abstract;
 my @captura;
 
-#quitar cometario si hay que crear tablas
+# quitar cometario si hay que crear tablas
 #crear_tablas();
+
+# quitar cometario para borrar datos
+#borrar();
 
 leer_historico();
 
 tratar_captura();
-
-
 
 
 #crea las tablas
@@ -76,17 +75,13 @@ sub tratar_captura{
 				|| die "No puedo conectarme con academia_new.sqlite\n";
 	
 	for (@captura){
-		print $captura[$i]."\n";
 		if ($captura[$i] eq 'alumno'){
 			$tabla = 'alumno';		
 		}else{
 			$tabla = 'profesor';
 		}
 		$i+=1;
-		print $captura[$i]."\n";
-		print "---------"."\n";
 		if($captura[$i] eq 'on'){
-			#print "introducir";
 			$i+=1;
 			my $dni = $captura[$i];
 			$i+=1;
@@ -104,13 +99,9 @@ sub tratar_captura{
 						variableA   => $curso,
 						variableB   => $mes
 				);
-				
-			
-			
-			my($stmt, @bind) = $sql-> insert ($tabla,\%record);
-			my $sth = $dbh->prepare($stmt);
+			($stmt, @bind) = $sql-> insert ($tabla,\%record);
+			$sth = $dbh->prepare($stmt);
 			$sth->execute( @bind );
-			
 			$i+=1;
 		}
 		elsif($captura[$i] eq 'off'){
@@ -119,13 +110,10 @@ sub tratar_captura{
 			my %where= (
 				dni => $dni
 			);	
-			
 			($stmt, @bind) = $sql-> delete($tabla,\%where);
 			$sth = $dbh->prepare($stmt);
 			$sth->execute( @bind );
-			
 			$i+=5;
-			
 		}
 		elsif ($captura[$i] eq 'mod' ){
 			$i+=1;
@@ -133,27 +121,30 @@ sub tratar_captura{
 			my %where= (
 				dni => $dni
 			);
-			$i+=1;
+			$i+=4;
 			my $mes=$captura[$i];
 			my %fieldvals = (
-				mensualidad => $mes,
+				variableB => $mes,
 			);
-			
-			($stmt, @bind) = $sql-> delete($tabla,\%where);
+			($stmt, @bind) = $sql-> update ($tabla,\%fieldvals,\%where);
 			$sth = $dbh->prepare($stmt);
-			$sth->execute( @bind );
-			;
-			$i+=4;
-			
+			$sth->execute( @bind );			
+			$i+=1;			
 		}
-		
 	 }
 	 my $rc = $dbh->disconnect();
 }
 
-
-
-
-
-
+sub borrar{
+	my $sql = SQL::Abstract->new;
+	my $dbh = DBI->connect( "dbi:SQLite:dbname=academia_new.sqlite");
+	($stmt, @bind) = $sql-> delete('alumno');
+	$sth = $dbh->prepare($stmt);
+	$sth->execute( @bind );
+	($stmt, @bind) = $sql-> delete('profesor');
+	$sth = $dbh->prepare($stmt);
+	$sth->execute( @bind );
+	 
+	 
+}
 
