@@ -9,7 +9,7 @@ has 'palabra', is =>'ro', isa => 'Str', required => 1;
 
 sub to_string{
     my $self = shift;
-    return 'Palabra:' . $self->palabra;
+    return ' Palabra:' . $self->palabra;
 }
 #diccionario
 sub diccionario {
@@ -21,12 +21,14 @@ sub diccionario {
 	#analiza
 	my $x;
 	my $p = $self->palabra;	
+	my $resultado;
 	for($x=0; $x <=@datos; $x += 1){
 		if (defined $datos[$x] && $datos[$x] =~ m/=\s(${p})\s/){
-			print $datos[$x];
+			#print $datos[$x];
+			$resultado = $resultado . $datos[$x];
 		}
 	}
-	
+	return $resultado;
 }
 #sinonimo
 sub sinonimo{
@@ -37,14 +39,17 @@ sub sinonimo{
 	close(f1);
 	#analiza
 	my $x;
-	my $p = $self->palabra;	
+	my $p = $self->palabra;
+	my $resultado;	
 	for($x=0; $x <=@datos; $x += 1){
 		if (defined $datos[$x] && $datos[$x] =~ m/(·\s${p})\s/){
 			$datos[$x] =~ s/(·\s)/\n/g;
 			$datos[$x] =~ s/(\s\:\s)/\n/g;
-			print $datos[$x];
+			#print $datos[$x];
+			$resultado = $resultado . $datos[$x];
 		}
-}
+	}
+	return $resultado;
 }
 #tesauro
 sub tesauro {
@@ -55,12 +60,14 @@ sub tesauro {
 	close(f1);
 	#analiza
 	my $x;
-	my $p = $self->palabra;	
+	my $p = $self->palabra;
+	my $resultado;	
 	for($x=0; $x <=@datos; $x += 1){
 		if (defined $datos[$x] && $datos[$x] =~ m/(·\s${p})\s/){
-			print  split("· ",$datos[$x]);
+			#print  split("· ",$datos[$x]);
+			$resultado = $resultado . $datos[$x];
 		}
 	}
+	return split("· ",$resultado);
 }
-
 1; 
