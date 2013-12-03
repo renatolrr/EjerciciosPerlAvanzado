@@ -68,6 +68,7 @@ sub tesauro {
 			$resultado = $resultado . $datos[$x];
 		}
 	}
-	return split("· ",$resultado);
+	return split("· ",$resultado)
+	;
 }
 1; 
