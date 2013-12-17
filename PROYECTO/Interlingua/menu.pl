@@ -19,15 +19,15 @@ my $menu = $ventana->Menu(-type => 'menubar');
 $ventana->configure(-menu => $menu);
 
 my $mUno = $menu->cascade(-label => '~Archivo', -tearoff => 0);
-$mUno->command(-label => '~Guardar', -command => \&func1);
-$mUno->command(-label => '~Recuperar', -command => \&func2);
+$mUno->command(-label => '~Abrir', -command => \&func1);
+$mUno->command(-label => '~Guardar', -command => \&func2);
 $mUno->command(-label => '~Salir', -command => \&func3);
 
 my $mDos = $menu->cascade(-label => '~Edición', -tearoff => 0);
 $mDos->command(-label => '~Borrar texto', -command => \&func4);
 
 
-my $mTres= $menu->cascade(-label => '~Twitter', -tearoff => 0);
+my $mTres= $menu->cascade(-label => '~Texto', -tearoff => 0);
 $mTres->command(-label => '~Enviar', -command => \&func5);
 $mTres->command(-label => '~Histórico enviados', -command => \&func6);
 
@@ -53,14 +53,24 @@ my $text = $ventana -> Text(-width=>40, -height=>5) -> pack(-side =>'right',
 MainLoop;
 
 sub func1{
-	$ventana -> messageBox(-type=>"ok", -message=>'Renato Ramirez' . "\n" . 
-	'renatolrr@gmail.com' . "\n" .  
-	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
+	my @tipos = ( [ "All files ", '*' ] );
+	my $nombreFich = $ventana->getOpenFile( -filetypes => \@tipos );
+		if ($nombreFich ne "") {
+			print "Has elegido $nombreFich \n";
+		}
+	my $tmp = "Has elegido $nombreFich ";
+	$ventana -> messageBox(-type=>"ok", -message=>$tmp);
 }
 sub func2{
-     $ventana -> messageBox(-type=>"ok", -message=>'Renato Ramirez' . "\n" . 
-	'renatolrr@gmail.com' . "\n" .  
-	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
+    my @tipos = ( [ "All files ", '*' ] );
+	$nombreFich = $ventana->getSaveFile( -filetypes => \@tipos );
+		if ($nombreFich ne "") {
+			print "Has elegido $nombreFich \n";
+		}
+	my $tmp = "Has elegido $nombreFich ";
+	$ventana -> messageBox(-type=>"ok", -message=>$tmp);
+
+    
 }
 
 sub func3{
