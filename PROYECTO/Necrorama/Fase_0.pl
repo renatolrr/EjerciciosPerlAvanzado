@@ -18,15 +18,19 @@ my $bd_file_name = shift || 'personaje.sqlite';
 my $sql = SQL::Abstract->new;
 
 
+print "Id\n";
+my $id=<STDIN>;
+
 print "Nombre\n";
 my $nombre=<STDIN>;
 	
 my %record = (
-        nombre      => $nombre,
+		nombre      => $nombre,
 );
 
 my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
     || die "No puedo conectarme con $bd_file_name: $!\n";
+
 my($stmt, @bind) = $sql-> insert ('personaje',\%record);
 
 my $sth = $dbh->prepare($stmt);

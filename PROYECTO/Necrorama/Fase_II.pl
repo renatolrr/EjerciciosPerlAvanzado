@@ -24,6 +24,27 @@ my $bd_file_name = shift || 'personaje.sqlite';
 my $sql = SQL::Abstract->new;
 
 
+print "Id\n";
+my $id=<STDIN>;
+
+my %where= (
+	id => $id
+);
+
+# Estado inmortal +3
+my %fieldvals = (
+        estado_1   => "Inmortal +3",
+);
+
+my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+my($stmt, @bind) = $sql-> update ('estados',\%fieldvals,\%where);
+
+my $sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
+my $rc = $dbh->disconnect();
+
 my %record = (
         estado_1   => "Inmortal +3",
 );
@@ -31,6 +52,44 @@ my %record = (
 my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
     || die "No puedo conectarme con $bd_file_name: $!\n";
 my($stmt, @bind) = $sql-> insert ('estados',\%record);
+
+my $sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
+my $rc = $dbh->disconnect();
+
+
+#Competencia Cosecha 2. Añade la puntuación de 1 a todas las Competencias básicas
+my %record_1= (
+		advertir 		=> "Advertir 1",
+		aguante			=> "Aguante 1",
+		astucia			=> "Astucia 1",
+		atletismo		=> "Atletismo 1",
+		frialdad		=> "Frialdad 1",
+        competencia_1   => "Cosecha 2",
+);
+
+my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+my($stmt, @bind) = $sql-> insert ('competencias',\%record_1);
+
+my $sth = $dbh->prepare($stmt);
+$sth->execute( @bind );
+
+my $rc = $dbh->disconnect();
+
+#Tira 1d10 +20 para calcular el Fondo de Karma
+###################################################
+
+#Fondo de Acción (Impacto Narrativo 3)
+
+my %record_3= (
+		fondo_accion 	=> 3,
+);
+
+my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+my($stmt, @bind) = $sql-> insert ('otros',\%record_3);
 
 my $sth = $dbh->prepare($stmt);
 $sth->execute( @bind );
