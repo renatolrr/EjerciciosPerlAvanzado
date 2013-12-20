@@ -33,18 +33,22 @@ my $vida_anterior=<STDIN>;
 my %fieldvals = (
 	vida_anterior => $vida_anterior,
 );
+
+my $table='personaje';
 	
+update();
 
-my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
-    || die "No puedo conectarme con $bd_file_name: $!\n";
-my($stmt, @bind) = $sql-> update ('personaje',\%fieldvals,\%where);
+sub update{
+	my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
+		|| die "No puedo conectarme con $bd_file_name: $!\n";
+	my($stmt, @bind) = $sql-> update ($table,\%fieldvals,\%where);
 
-my $sth = $dbh->prepare($stmt);
-$sth->execute( @bind );
+	my $sth = $dbh->prepare($stmt);
+	$sth->execute( @bind );
 
 
-my $rc = $dbh->disconnect();
-
+	my $rc = $dbh->disconnect();
+}
 
 
 
