@@ -15,7 +15,7 @@ sub to_string{
 sub diccionario {
 	my $self = shift;
 	#abre fichero
-	open(f1, 'iaes.txt');
+	open(f1, 'archivos_maestros/iaes.txt');
 	my @datos=<f1>;
 	close(f1);
 	#analiza
@@ -34,7 +34,7 @@ sub diccionario {
 sub sinonimo{
 	my $self = shift;
 	#abre fichero
-	open(f1, 'DICTIONARIO DE SYNONYMOS 2013.txt');
+	open(f1, 'archivos_maestros/DICTIONARIO DE SYNONYMOS 2013.txt');
 	my @datos=<f1>;
 	close(f1);
 	#analiza
@@ -55,7 +55,7 @@ sub sinonimo{
 sub tesauro {
 	my $self = shift;
 	#abre fichero
-	open(f1, 'THESAURO_2013.txt');
+	open(f1, 'archivos_maestros/THESAURO_2013.txt');
 	my @datos=<f1>;
 	close(f1);
 	#analiza

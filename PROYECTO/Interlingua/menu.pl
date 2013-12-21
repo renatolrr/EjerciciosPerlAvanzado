@@ -37,38 +37,27 @@ $mAyuda->command(-label => '~Acerca de...', -command => \&func7);
 
 my $ent = $ventana -> Entry() -> pack();
 my $boton = $ventana ->Button(-text=>"resuelve", -command =>\&resuelve);
-$boton->pack(-side => 'bottom', -expand => 1, -fill => 'x');
-$ventana->Label(-text => "Diccionario")->pack; 
-my $dic = $ventana -> Text(-width=>40, -height=>5) -> pack(-side => 'bottom',
--expand => 1, -fill => 'x');
-$ventana->Label(-text => "Sinonimo")->pack; 
-my $sin = $ventana -> Text(-width=>40, -height=>10) -> pack(-side => 'bottom',
--expand => 1, -fill => 'x');
-$ventana->Label(-text => "Tesauro")->pack; 
-my $tes = $ventana -> Text(-width=>40, -height=>20) -> pack(-side => 'bottom',
--expand => 1, -fill => 'x');
-$ventana->Label(-text => "Texto")->pack; 
-my $text = $ventana -> Text(-width=>40, -height=>5) -> pack(-side =>'right',
--expand => 1, -fill => 'x');
+$boton->pack();
+$ventana->Label(-text => "Diccionario")->pack(); 
+my $dic = $ventana -> Text(-width=>40, -height=>5) -> pack();
+$ventana->Label(-text => "Sinonimo")->pack(); 
+my $sin = $ventana -> Text(-width=>40, -height=>10) -> pack();
+$ventana->Label(-text => "Tesauro")->pack(); 
+my $tes = $ventana -> Text(-width=>40, -height=>20) -> pack();
+$ventana->Label(-text => "Texto")->pack(); 
+my $text = $ventana -> Text(-width=>40, -height=>5) -> pack();
 MainLoop;
 
 sub func1{
-	my @tipos = ( [ "All files ", '*' ] );
-	my $nombreFich = $ventana->getOpenFile( -filetypes => \@tipos );
-		if ($nombreFich ne "") {
-			print "Has elegido $nombreFich \n";
-		}
-	my $tmp = "Has elegido $nombreFich ";
-	$ventana -> messageBox(-type=>"ok", -message=>$tmp);
+	$ventana -> messageBox(-type=>"ok", -message=>'Renato Ramirez' . "\n" . 
+	'renatolrr@gmail.com' . "\n" .  
+	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
+	
 }
 sub func2{
-    my @tipos = ( [ "All files ", '*' ] );
-	$nombreFich = $ventana->getSaveFile( -filetypes => \@tipos );
-		if ($nombreFich ne "") {
-			print "Has elegido $nombreFich \n";
-		}
-	my $tmp = "Has elegido $nombreFich ";
-	$ventana -> messageBox(-type=>"ok", -message=>$tmp);
+	$ventana -> messageBox(-type=>"ok", -message=>'Renato Ramirez' . "\n" . 
+	'renatolrr@gmail.com' . "\n" .  
+	"https://github.com/renatolrr/EjerciciosPerlAvanzado"); 
 
     
 }
@@ -82,7 +71,7 @@ sub func4{
 	'renatolrr@gmail.com' . "\n" .  
 	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
 }
-sub func6{
+sub func5{
 	$ventana -> messageBox(-type=>"ok", -message=>'Renato Ramirez' . "\n" . 
 	'renatolrr@gmail.com' . "\n" .  
 	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
