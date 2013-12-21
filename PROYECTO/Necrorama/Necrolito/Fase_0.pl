@@ -9,7 +9,7 @@ use DBI;
 use SQL::Abstract;
 
 print "Fase 0\n";
-print "Tu nombre.\n";
+print "Tu nick.\n";
 
 
 my $bd_file_name = shift || 'personaje.sqlite';
@@ -22,7 +22,7 @@ print "Nombre\n";
 my $nombre=<STDIN>;
 	
 my %record = (
-		nombre      => $nombre,
+		nick      => $nick,
 );
 
 my $table='personaje';

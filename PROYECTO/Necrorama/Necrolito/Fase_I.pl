@@ -20,11 +20,11 @@ my $bd_file_name = shift || 'personaje.sqlite';
 my $sql = SQL::Abstract->new;
 
 
-print "Id\n";
-my $id=<STDIN>;
+print "Nick\n";
+my $nick=<STDIN>;
 
 my %where= (
-	id => $id
+	id => $nick
 );
 
 print "Vida anterior\n";
