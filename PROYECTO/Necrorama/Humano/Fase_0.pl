@@ -23,7 +23,7 @@ my $nick=<STDIN>;
 	
 my %record = (
 		nick      => $nick,
-		tipo      => 'necrolito',
+		tipo      => 'humano',
 );
 
 my $table='personaje';

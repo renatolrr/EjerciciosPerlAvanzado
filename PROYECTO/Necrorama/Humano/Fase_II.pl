@@ -10,13 +10,13 @@ use SQL::Abstract;
 
 print "Fase II\n";
 print "Tanatocreación.\n";
-print "Apunta el Estado Inmortal +3 y la Competencia Cosecha 2. Añade la puntuación de 1 a todas
-las Competencias básicas ya escritas en la hoja de personaje. Tira 1d10 +20 para calcular el Fondo de Karma y apunta 3
-en el Fondo de Acción (Impacto Narrativo 3).\n";
+print "Añade la puntuación de 1 a todas las Competencias básicas ya escritas en la hoja de persona-
+je. Tira 1d10 para calcular el Fondo de Karma y apunta 2 en el Fondo de Acción.\n";
 print "a) Virtud. Elige una, apunta los Estados de Conflicto a +10 que proporciona -sin olvidarte del asterisco- y pro-
-cura que te quede claro el concepto para luego poder utilizar el Fondo de Acción con estos Estados.\n";
-print "b) Estrella Fija. Elige una o determínala al azar. Apunta tres Estados con +3, +2 y +1. Puedes crear Estados
-Llave.\n";
+cura que te quede claro el concepto para luego poder utilizar el Fondo de Acción.\n";
+print "b) Elige dos Estados cualesquiera de entre todos los disponibles en el apartado Estrella Fija y asígnales pun-
+tuaciones de +2 y +1. Puedes crear Estados Llave.\n";
+
 
 my $bd_file_name = shift || '../personaje.sqlite';
 
@@ -31,42 +31,32 @@ my %where= (
         nick => $nick
 );
 
-# Estado inmortal +3
-my %fieldvals = (
-        estado_1 => "Inmortal +3",
-);
 
-my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" )
-    || die "No puedo conectarme con $bd_file_name: $!\n";
-my($stmt, @bind) = $sql-> update ('estados',\%fieldvals,\%where);
-my $sth = $dbh->prepare($stmt);
-$sth->execute( @bind );
-
-
-#Competencia Cosecha 2. Añade la puntuación de 1 a todas las Competencias básicas
-%fieldvals= (
+# Añade la puntuación de 1 a todas las Competencias básicas
+my %fieldvals= (
                 advertir 		=> "Advertir 1",
                 aguante			=> "Aguante 1",
                 astucia			=> "Astucia 1",
                 atletismo		=> "Atletismo 1",
                 frialdad		=> "Frialdad 1",
-				competencia_1 	=> "Cosecha 2",
 );
 
-($stmt, @bind) = $sql-> update ('competencias',\%fieldvals,\%where);
-$sth = $dbh->prepare($stmt);
+my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" )
+    || die "No puedo conectarme con $bd_file_name: $!\n";
+my($stmt, @bind) = $sql-> update ('competencias',\%fieldvals,\%where);
+my $sth = $dbh->prepare($stmt);
 $sth->execute( @bind );
 
 
-#Tira 1d10 +20 para calcular el Fondo de Karma
-#Fondo de Acción (Impacto Narrativo 3)
+#Tira 1d10   para calcular el Fondo de Karma
+#Fondo de Acción (Impacto Narrativo 2)
 
 
-my $rand= int(rand(10)) + 21;
+my $rand= int(rand(10)) + 1;
 
 
 %fieldvals = (
-                fondo_accion        => 3,
+                fondo_accion        => 2,
                 fondo_karma			=> $rand
 );
 
