@@ -10,11 +10,16 @@ use lib qw(lib);
 
 use PA::Moose::Personaje;
 
+
+#nick pra tu personaje
+print "Nick\n";
+my $nick=<STDIN>;
+
 my @tips = ("necrolito", "humano", "demonio");
 my $rand=int(rand(3));
 my $tipo = $tips[$rand];
 
-my $personaje = new PA::Moose::Personaje ( 	nick => 'malo', 
+my $personaje = new PA::Moose::Personaje ( 	nick => $nick, 
 											tipo => $tipo);
 say $personaje->to_string, "\n";
 $personaje->crea_personaje;

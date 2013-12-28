@@ -167,4 +167,6 @@ sub crea_personaje {
 	
 	my $rc = $dbh->disconnect();
 }
+
+
 1; 
