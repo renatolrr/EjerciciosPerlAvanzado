@@ -14,7 +14,8 @@ use Tk;
 use PA::Moose::Personaje;
 use utf8; #problema acentos
 
-my $nick;
+my $bd_file_name = shift || 'personaje.sqlite';
+my $sql = SQL::Abstract->new;
 
 my $ventana = new MainWindow;
 $ventana->title('Necrorama');
@@ -33,10 +34,10 @@ $mDos->command(-label => '~Todos personajes', -command => \&func6);
 my $mAyuda = $menu->cascade(-label => '~Ayuda', -tearoff => 0);
 $mAyuda->command(-label => '~Acerca de...', -command => \&func7);
 
-$ventana->Label(-text => "Nick")->pack(); 
+$ventana->Label(-text => "Numero personaje")->pack(); 
 my $ent = $ventana -> Entry() -> pack();
 
-my $boton = $ventana ->Button(-text=>"Busca", -command =>\&busca);
+my $boton = $ventana ->Button(-text=>"Busca", -command =>\&encuentra);
 $boton->pack();
 $ventana->Label(-text => "Tipo")->pack(); 
 my $tipo = $ventana -> Text(-width=>40, -height=>1) -> pack();
@@ -55,10 +56,10 @@ sub func1{
          exit();
 }
 sub func6{
-	my $bd_file_name = shift || 'personaje.sqlite';
+	
 	my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
     || die "No puedo conectarme con $bd_file_name: $!\n";
-	my $ary = $dbh->selectall_arrayref('select nick from personaje');
+	my $ary = $dbh->selectall_arrayref('select rowid, nick from personaje');
 	my $men;
 	for (@$ary){
 		$men = $men . join ("\t",@$_);
@@ -72,63 +73,55 @@ sub func7{
 	"https://github.com/renatolrr/EjerciciosPerlAvanzado");
 }
 
-sub busca{
-	my $nick= $ent->get();
-	#$ventana -> messageBox(-type=>"ok", -message=> $nick );
-	
-	
-	my $bd_file_name = shift || 'personaje.sqlite';
+
+sub encuentra {
+	my $num= $ent->get();
 	my $dbh = DBI->connect( "dbi:SQLite:dbname=$bd_file_name" ) 
     || die "No puedo conectarme con $bd_file_name: $!\n";
+    my $seleccion=('select tipo from personaje where rowid='.$num );
     
-    
-    my $seleccion= "select tipo from personaje where nick='".$nick ."'";
-	my $ary=$dbh->selectall_arrayref($seleccion);
+	my $ary = $dbh->selectall_arrayref($seleccion);
 	my $men;
 	for (@$ary){
-		$men = join ("\t",@$_);
+		$men = $men . join ("\t",@$_);
 		}
-	#$ventana -> messageBox(-type=>"ok", -message=> $men );
-	
+	$ventana -> messageBox(-type=>"ok", -message=> $men );
+	$tipo ->delete('0.0',"end");
 	$tipo ->insert("end", $men);
 	
-	$seleccion= "select estado_1 from estados where nick='".$nick ."'";
+	$seleccion=( 'select estado_1 from estados where rowid='.$num);
 	$ary=$dbh->selectall_arrayref($seleccion);
 	for (@$ary){
 		$men = join ("\t",@$_);
 		}
-	#$ventana -> messageBox(-type=>"ok", -message=> $men );
-	
+	$estados ->delete('0.0',"end");
 	$estados ->insert("end", $men);
 	
-	$seleccion= "select advertir, aguante, astucia, atletismo, frialdad, competencia_1 from competencias where nick='".$nick ."'";
+	$seleccion= "select advertir, aguante, astucia, atletismo, frialdad, competencia_1 from competencias where rowid=".$num;
 	$ary=$dbh->selectall_arrayref($seleccion);
 	for (@$ary){
 		$men = join ("\n",@$_);
 		}
-	#$ventana -> messageBox(-type=>"ok", -message=> $men );
-	
+	$competencias ->delete('0.0',"end");
 	$competencias ->insert("end", $men);
-	
-	$seleccion= "select fondo_karma from otros where nick='".$nick ."'";
+
+
+$seleccion= "select fondo_karma from otros where rowid=".$num;
 	$ary=$dbh->selectall_arrayref($seleccion);
 	for (@$ary){
 		$men = join ("\n",@$_);
 		}
-	#$ventana -> messageBox(-type=>"ok", -message=> $men );
-	
+	$fondo_karma ->delete('0.0',"end");
 	$fondo_karma ->insert("end", $men);
 	
-	$seleccion= "select fondo_accion from otros where nick='".$nick ."'";
+	$seleccion= "select fondo_accion from otros where rowid=".$num;
 	$ary=$dbh->selectall_arrayref($seleccion);
 	for (@$ary){
 		$men = join ("\n",@$_);
 		}
-	#$ventana -> messageBox(-type=>"ok", -message=> $men );
-	
+	$fondo_accion ->delete('0.0',"end");	
 	$fondo_accion ->insert("end", $men);
 	
-	
-	
-
 }
+
+

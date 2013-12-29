@@ -11,7 +11,7 @@ use lib qw(lib);
 use PA::Moose::Personaje;
 
 
-#nick pra tu personaje
+#nick para tu personaje
 print "Nick\n";
 my $nick=<STDIN>;
 
